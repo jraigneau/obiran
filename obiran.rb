@@ -1,4 +1,5 @@
 #!/usr/bin/ruby -w
+# encoding: utf-8
 
 # OBIRAN (kenobi! "Vous êtes mon seul espoir" (Princesse Leila, Starwars IV))
 # Outil de Backup Incrémental en Ruby 
