@@ -32,3 +32,6 @@ excludedDirs:
 
 #Effacter les répertoires exclus des prochaines sauvegardes(oui= true, non=false)
 deleteExcludedDirs: true
+
+#Rajout du path rync du remote serveur -- bug notamment chez Synology
+rsyncPath: /usr/syno/bin/rsync

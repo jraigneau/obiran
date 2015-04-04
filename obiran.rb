@@ -5,7 +5,7 @@
 
 # Permet de sauvegarder en utilisant rsync + "hard link" pour l'incrémental + ssh
 # Développé par J.RAIGNEAU - julien@raigneau.net - http://labs.tifauve.net
-# v0.5 
+# v0.6 
 
 
 #== Variables utiles ==
@@ -45,6 +45,9 @@ if config['deleteExcludedDirs']
 else
   deleteExcludedDirs = ""
 end
+
+#Emplacement binaire Rsync sur Remote
+rsyncPath = config['rsyncPath']
 
 #Nom du répertoire dans lequel sera stocké la nouvelle itération: AAAAMMJJ_HHMM
 backupdir = (Time.now).strftime("%Y%m%d_%H%M%S")
@@ -111,7 +114,7 @@ excludedDirs=excludedDirs.collect { |x| "--exclude=#{x}"}.join(" ")
 ## Etape 3: début des rsync, lancés avec priorité basse (nice -n 19)
 myDirs.each do |myDir|
 	logThis "Synchronisation de #{myDir}..."
-	`nice -n 19 rsync -az --delete #{excludedDirs} #{ deleteExcludedDirs} -e "ssh -p #{sshPort} #{sshOptions}" #{myDir} #{sshUser}@#{sshIpDestination}:#{backupmasterdir}/#{backupdir}`
+	`nice -n 19 rsync -az --delete #{excludedDirs} #{deleteExcludedDirs} --rsync-path=#{rsyncPath} -e "ssh -p #{sshPort} #{sshOptions}" #{myDir} #{sshUser}@#{sshIpDestination}:#{backupmasterdir}/#{backupdir}`
 end
 
 logThis "\n============================================"
